@@ -27,5 +27,5 @@ RUN mkdir -p /opt/kafka/libs/ \
 
 
 
-EXPOSE 8083 7073
+
 

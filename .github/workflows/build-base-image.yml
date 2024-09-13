@@ -40,7 +40,7 @@ jobs:
           VERSION=$(date +%Y%m%d%H%M%S)
 
           # Build the Docker image from the base-image directory
-          docker build
+          docker build \
               -t $IMAGE_NAME:latest \
               -t $IMAGE_NAME:$VERSION ./base-image
 
