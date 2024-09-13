@@ -10,8 +10,8 @@ ARG JMX_PROMETHEUS_VERSION
 ENV JMX_PROMETHEUS_VERSION=${JMX_PROMETHEUS_VERSION:-1.0.1}
 
 # Install required connectors
-RUN confluent-hub install confluentinc/kafka-connect-datagen:latest --no-prompt --verbose \
-    && confluent-hub install confluentinc/kafka-connect-s3:latest --no-prompt --verbose
+# RUN confluent-hub install confluentinc/kafka-connect-datagen:latest --no-prompt --verbose \
+#     && confluent-hub install confluentinc/kafka-connect-s3:latest --no-prompt --verbose
 
 # Ensure connect-distributed properties setup is added and configured.
 COPY cmd.sh /usr/local/bin
