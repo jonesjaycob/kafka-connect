@@ -13,7 +13,7 @@ jobs:
 
     env:
       IMAGE_NAME: jaycobjones/kafka-connect-aws-datagen-on-prem-mqtt
-      CONFIG_PATH: ./connector-configs/aws-datagen      
+      CONFIG_PATH: ./connector-configs/kafka-connect-server-1     
       VERSION: ${{ github.sha }}                        
 
     steps:
