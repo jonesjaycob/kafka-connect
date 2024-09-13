@@ -5,6 +5,12 @@
 3. Update `Dockerfile` to install connector or insert your jar files in the correct directory
 4. Create a build file
 
+### Naming Convention
+
+For root follow
+
+`[cloud_provider/on-prem]-[connectors]`
+
 ### ENV
 
 ```
