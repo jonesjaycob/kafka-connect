@@ -14,7 +14,7 @@ ENV JMX_PROMETHEUS_VERSION=${JMX_PROMETHEUS_VERSION:-1.0.1}
 #     && confluent-hub install confluentinc/kafka-connect-s3:latest --no-prompt --verbose
 
 # Ensure connect-distributed properties setup is added and configured.
-COPY cmd.sh /usr/local/bin
+# COPY cmd.sh /usr/local/bin
 COPY templates /etc/kafka/templates
 COPY /prometheus/kafka-connect-prometheus.yml /opt
 
@@ -25,7 +25,7 @@ RUN mkdir -p /opt/kafka/libs/ \
     && wget -P /opt/kafka/libs/ https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/$JMX_PROMETHEUS_VERSION/jmx_prometheus_javaagent-$JMX_PROMETHEUS_VERSION.jar \
     && wget -P /usr/share/java/kafka/ https://github.com/aws/aws-msk-iam-auth/releases/download/v$AWS_MSK_IAM_VERSION/aws-msk-iam-auth-$AWS_MSK_IAM_VERSION-all.jar \
     && wget -P /opt/kafka/libs/ https://repo1.maven.org/maven2/software/amazon/awssdk/auth/$AWS_AUTH_VERSION/auth-$AWS_AUTH_VERSION.jar \
-    && chmod +x /usr/local/bin/cmd.sh \
+    # && chmod +x /usr/local/bin/cmd.sh \
     && chown appuser /etc/kafka \
     && dnf install --assumeyes jq \
     && dnf install --assumeyes gettext
