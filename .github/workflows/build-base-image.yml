@@ -1,13 +1,17 @@
 name: Build and Publish Kafka Connect Base Image
 
-# Trigger the workflow on push to the main branch or when a pull request is merged
+# Trigger the workflow only when changes occur in the 'base-image/' directory
 on:
   push:
     branches:
       - main
+    paths:
+      - "base-image/**" # Only run the workflow when files in 'base-image/' are changed
   pull_request:
     branches:
       - main
+    paths:
+      - "base-image/**" # Only trigger on PRs when files in 'base-image/' are changed
 
 jobs:
   build:
@@ -35,7 +39,7 @@ jobs:
           IMAGE_NAME=jaycobjones/kafka-connect-base
           VERSION=$(date +%Y%m%d%H%M%S)
 
-          # Build the Docker image
+          # Build the Docker image from the base-image directory
           docker build --build-arg AWS_MSK_IAM_VERSION=${{ secrets.AWS_MSK_IAM_VERSION }} \
                        --build-arg AWS_AUTH_VERSION=${{ secrets.AWS_AUTH_VERSION }} \
                        --build-arg JMX_PROMETHEUS_VERSION=${{ secrets.JMX_PROMETHEUS_VERSION }} \
@@ -44,4 +48,4 @@ jobs:
 
           # Push both latest and versioned tags to Docker Hub
           docker push $IMAGE_NAME:latest
-          docker push $IMAGE_NAME
+          docker push $IMAGE_NAME:$VERSION
