@@ -1,4 +1,4 @@
-FROM jaycobjones/kafka-connect-base:20240913195424
+FROM jaycobjones/kafka-connect-base:latest
 
 
 RUN confluent-hub install confluentinc/kafka-connect-datagen:latest --no-prompt --verbose \
