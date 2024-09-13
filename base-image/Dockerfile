@@ -25,3 +25,7 @@ RUN mkdir -p /opt/kafka/libs/ \
     && dnf install --assumeyes gettext
  
 
+
+
+EXPOSE 8083 7073
+
