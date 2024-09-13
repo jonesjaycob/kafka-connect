@@ -31,9 +31,7 @@ RUN mkdir -p /opt/kafka/libs/ \
     && dnf install --assumeyes gettext
  
 
-USER appuser
 
-ENV KAFKA_OPTS="-javaagent:/opt/kafka/libs/jmx_prometheus_javaagent-${JMX_PROMETHEUS_VERSION}.jar=7073:/opt/kafka-connect-prometheus.yml"
 
 EXPOSE 8083 7073
 

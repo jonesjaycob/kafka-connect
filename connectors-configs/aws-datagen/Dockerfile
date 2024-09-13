@@ -1,12 +1,16 @@
 FROM jaycobjones/kafka-connect-base:latest
 
 
-
+RUN confluent-hub install confluentinc/kafka-connect-datagen:latest --no-prompt --verbose
 COPY /configs/datagen-config.json /etc/kafka/connect/
 COPY cmd.sh /usr/local/bin
 
-RUN confluent-hub install confluentinc/kafka-connect-datagen:latest --no-prompt --verbose \
-&& chmod +x /usr/local/bin/cmd.sh
+USER root
+RUN chmod +x /usr/local/bin/cmd.sh
+
+USER appuser
+
+ENV KAFKA_OPTS="-javaagent:/opt/kafka/libs/jmx_prometheus_javaagent-${JMX_PROMETHEUS_VERSION}.jar=7073:/opt/kafka-connect-prometheus.yml"
 
 # Expose ports for Kafka Connect and JMX monitoring
 EXPOSE 8083 7073
