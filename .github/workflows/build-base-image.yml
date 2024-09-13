@@ -40,7 +40,7 @@ jobs:
                        --build-arg AWS_AUTH_VERSION=${{ secrets.AWS_AUTH_VERSION }} \
                        --build-arg JMX_PROMETHEUS_VERSION=${{ secrets.JMX_PROMETHEUS_VERSION }} \
                        -t $IMAGE_NAME:latest \
-                       -t $IMAGE_NAME:$VERSION .
+                       -t $IMAGE_NAME:$VERSION ./base-image
 
           # Push both latest and versioned tags to Docker Hub
           docker push $IMAGE_NAME:latest
