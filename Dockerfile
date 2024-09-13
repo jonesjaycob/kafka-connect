@@ -37,4 +37,3 @@ ENV KAFKA_OPTS="-javaagent:/opt/kafka/libs/jmx_prometheus_javaagent-${JMX_PROMET
 
 EXPOSE 8083 7073
 
-CMD ["/usr/local/bin/cmd.sh"]
