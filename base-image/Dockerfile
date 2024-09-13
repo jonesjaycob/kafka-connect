@@ -16,7 +16,7 @@ ENV JMX_PROMETHEUS_VERSION=${JMX_PROMETHEUS_VERSION:-1.0.1}
 # Ensure connect-distributed properties setup is added and configured.
 COPY cmd.sh /usr/local/bin
 COPY templates /etc/kafka/templates
-COPY /configs/prometheus/kafka-connect-prometheus.yml /opt
+COPY /prometheus/kafka-connect-prometheus.yml /opt
 
 USER root
 
