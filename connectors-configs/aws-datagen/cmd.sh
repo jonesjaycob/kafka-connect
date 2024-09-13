@@ -17,11 +17,39 @@ done
 
 echo "Kafka Connect is up and running, applying connector configurations..."
 
-# Apply connector configurations from /etc/kafka/connect/ directory
+# Loop through all JSON files in /etc/kafka/connect/ directory
 for config in /etc/kafka/connect/*.json; do
   connector_name=$(basename "$config" .json)
-  echo "Creating or updating connector: $connector_name"
-  curl -X PUT -H "Content-Type: application/json" --data @"$config" http://localhost:8083/connectors/$connector_name/config
+
+  # Check if the connector already exists
+  EXISTS=$(curl --silent --output /dev/null --write-out "%{http_code}" "http://localhost:8083/connectors/$connector_name")
+
+  if [ "$EXISTS" -eq 200 ]; then
+    # If the connector exists, use PUT to update the configuration
+    echo "Updating existing connector $connector_name because of status code $EXISTS --> Found"
+    
+    # Extract only the config object from the file for the PUT request
+    CONFIG_STRING=$(jq '.config' "$config")
+
+    # Echo the data being sent
+    echo "Data being sent in PUT request:"
+    echo "$CONFIG_STRING"
+
+    curl --request PUT "http://localhost:8083/connectors/$connector_name/config" \
+         --header 'Content-Type: application/json' \
+         --data "$CONFIG_STRING" | jq
+  else
+    # If the connector does not exist, use POST to create it
+    echo "Creating new connector $connector_name because of status code $EXISTS --> Not Found"
+
+    # Echo the data being sent
+    echo "Data being sent in POST request:"
+    cat "$config"
+
+    curl --request POST "http://localhost:8083/connectors" \
+         --header 'Content-Type: application/json' \
+         --data @"$config" | jq
+  fi
 done
 
 echo "The configurations have been applied"

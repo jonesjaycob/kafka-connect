@@ -2,11 +2,14 @@ FROM jaycobjones/kafka-connect-base:latest
 
 
 RUN confluent-hub install confluentinc/kafka-connect-datagen:latest --no-prompt --verbose
-COPY /configs/datagen-config.json /etc/kafka/connect/
+COPY /configs /etc/kafka/connect/
 COPY cmd.sh /usr/local/bin
 
 USER root
 RUN chmod +x /usr/local/bin/cmd.sh
+
+RUN chown -R appuser:appuser /etc/kafka/connect/ \
+    && chmod -R 755 /etc/kafka/connect/
 
 USER appuser
 
