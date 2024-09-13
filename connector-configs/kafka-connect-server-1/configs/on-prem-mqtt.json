@@ -1,0 +1,14 @@
+{
+  "name": "on-prem-mqtt",
+  "config": {
+      "connector.class": "io.confluent.connect.mqtt.MqttSourceConnector",
+      "tasks.max": "1",
+      "mqtt.server.uri": "tcp://ec2-52-33-87-191.us-west-2.compute.amazonaws.com:1883",
+      "mqtt.topics":"mqtt",
+      "kafka.topic":"mqtt",
+      "mqtt.qos": "2",
+      "confluent.topic.bootstrap.servers": "b-1-public.testcluster2.65grj0.c6.kafka.us-west-2.amazonaws.com:9198,b-2-public.testcluster2.65grj0.c6.kafka.us-west-2.amazonaws.com:9198,b-3-public.testcluster2.65grj0.c6.kafka.us-west-2.amazonaws.com:9198",
+      "confluent.topic.replication.factor": "1",
+      "confluent.license":""
+  }
+}

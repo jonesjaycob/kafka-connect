@@ -1,7 +1,8 @@
 FROM jaycobjones/kafka-connect-base:20240913195424
 
 
-RUN confluent-hub install confluentinc/kafka-connect-datagen:latest --no-prompt --verbose
+RUN confluent-hub install confluentinc/kafka-connect-datagen:latest --no-prompt --verbose \
+    && confluent-hub install confluentinc/kafka-connect-mqtt:latest --no-prompt --verbose
 COPY /configs /etc/kafka/connect/
 COPY cmd.sh /usr/local/bin
 
