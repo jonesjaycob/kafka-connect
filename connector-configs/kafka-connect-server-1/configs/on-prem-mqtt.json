@@ -4,7 +4,7 @@
     "connect.mqtt.hosts": "tcp://ec2-52-33-87-191.us-west-2.compute.amazonaws.com:1883",
     "connector.class": "io.lenses.streamreactor.connect.mqtt.source.MqttSourceConnector",
     "tasks.max": "1",
-    "connect.mqtt.kcql": "INSERT INTO mqtt SELECT * FROM /# WITHCONVERTER=`io.lenses.streamreactor.connect.converters.source.JsonSimpleConverter`",
+    "connect.mqtt.kcql": "INSERT INTO mqtt SELECT * FROM /mjson WITHCONVERTER=`io.lenses.streamreactor.connect.converters.source.JsonSimpleConverter`",
     "connect.mqtt.client.id": "jaycob-test",
     "connect.mqtt.service.quality": "1",
     "key.converter": "org.apache.kafka.connect.storage.StringConverter",
