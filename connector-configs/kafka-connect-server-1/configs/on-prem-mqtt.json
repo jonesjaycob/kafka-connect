@@ -1,10 +1,10 @@
 {
   "name": "on-prem-mqtt",
   "config": {
-    "connect.mqtt.hosts": "tcp://ec2-52-33-87-191.us-west-2.compute.amazonaws.com:1883",
+    "connect.mqtt.hosts": "tcp://192.168.49.2:31883",
     "connector.class": "io.lenses.streamreactor.connect.mqtt.source.MqttSourceConnector",
     "tasks.max": "1",
-    "connect.mqtt.kcql": "INSERT INTO mqtt SELECT * FROM /mjson WITHCONVERTER=`io.lenses.streamreactor.connect.converters.source.JsonSimpleConverter`",
+    "connect.mqtt.kcql": "INSERT INTO mqtt_topic1 SELECT * FROM /topic1 WITHCONVERTER=`io.lenses.streamreactor.connect.converters.source.JsonSimpleConverter`; INSERT INTO mqtt_topic2 SELECT * FROM /topic2 WITHCONVERTER=`io.lenses.streamreactor.connect.converters.source.JsonSimpleConverter`",
     "connect.mqtt.client.id": "jaycob-test",
     "connect.mqtt.service.quality": "1",
     "key.converter": "org.apache.kafka.connect.storage.StringConverter",
