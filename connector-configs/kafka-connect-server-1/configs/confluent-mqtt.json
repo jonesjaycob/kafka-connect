@@ -1,0 +1,13 @@
+{
+  "name": "confluent-mqtt",
+  "config": {
+    "kafka.topic": "mqtt-cp",
+    "mqtt.server.uri": "tcp://192.168.49.2:31883",
+    "connector.class": "io.confluent.connect.mqtt.MqttSourceConnector",
+    "tasks.max": "1",
+    "mqtt.topics": "topic1",
+    "mqtt.qos": "2",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "io.confluent.connect.protobuf.ProtobufConverter"
+  }
+}
