@@ -23,7 +23,7 @@ for config in /etc/kafka/connect/*.json; do
   connector_name=$(basename "$config" .json)
 
   # Check if the connector already exists
-  EXISTS=$(curl --silent --output /dev/null --write-out "%{http_code}" "http://localhost:8083/connectors/$connector_name")
+  EXISTS=$(curl --silent --output /dev/null --write-out "%{http_code}" "http://$REST_ADVERTISED_HOST_NAME:8083/connectors/$connector_name")
 
   if [ "$EXISTS" -eq 200 ]; then
     # If the connector exists, use PUT to update the configuration
@@ -36,7 +36,7 @@ for config in /etc/kafka/connect/*.json; do
     echo "Data being sent in PUT request:"
     echo "$CONFIG_STRING"
 
-    curl --request PUT "http://localhost:8083/connectors/$connector_name/config" \
+    curl --request PUT "http://$REST_ADVERTISED_HOST_NAME:8083/connectors/$connector_name/config" \
          --header 'Content-Type: application/json' \
          --data "$CONFIG_STRING" | jq
   else
@@ -47,7 +47,7 @@ for config in /etc/kafka/connect/*.json; do
     echo "Data being sent in POST request:"
     cat "$config"
 
-    curl --request POST "http://localhost:8083/connectors" \
+    curl --request POST "http://$REST_ADVERTISED_HOST_NAME:8083/connectors" \
          --header 'Content-Type: application/json' \
          --data @"$config" | jq
   fi
