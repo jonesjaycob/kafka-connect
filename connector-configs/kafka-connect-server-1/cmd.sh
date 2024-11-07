@@ -17,7 +17,19 @@ until curl -s http://$REST_ADVERTISED_HOST_NAME/connectors; do
   sleep 5
 done
 
-echo "Kafka Connect is up and running, applying connector configurations..."
+echo "Kafka Connect is up and running. Deleting all existing connectors..."
+
+# Fetch all existing connectors and delete them
+EXISTING_CONNECTORS=$(curl -s http://$REST_ADVERTISED_HOST_NAME/connectors | jq -r '.[]')
+
+for connector in $EXISTING_CONNECTORS; do
+  echo "Deleting connector: $connector"
+  curl --request DELETE "http://$REST_ADVERTISED_HOST_NAME/connectors/$connector"
+done
+
+echo "All existing connectors have been deleted."
+
+echo "Applying connector configurations..."
 
 # Loop through all JSON files in /etc/kafka/connect/ directory
 for config in /etc/kafka/connect/*.json; do
