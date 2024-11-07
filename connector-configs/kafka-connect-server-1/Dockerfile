@@ -17,7 +17,7 @@ RUN wget https://github.com/lensesio/stream-reactor/releases/download/8.0.0/kafk
 # Copy configuration files
 COPY /configs /etc/kafka/connect/
 COPY cmd.sh /usr/local/bin
-COPY /lib /usr/share/confluent-hub-components
+
 
 # Set permissions for the command script
 RUN chmod +x /usr/local/bin/cmd.sh \
