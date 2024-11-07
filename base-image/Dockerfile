@@ -12,6 +12,7 @@ ENV JMX_PROMETHEUS_VERSION=1.0.1
 
 COPY templates /etc/kafka/templates
 COPY /prometheus/kafka-connect-prometheus.yml /opt
+COPY /lib /usr/share/confluent-hub-components
 
 USER root
 
