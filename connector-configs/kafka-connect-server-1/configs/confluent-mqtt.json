@@ -8,6 +8,8 @@
     "mqtt.topics": "topic1",
     "mqtt.qos": "2",
     "key.converter": "org.apache.kafka.connect.storage.StringConverter",
-    "value.converter": "io.confluent.connect.protobuf.ProtobufConverter"
+    "value.converter": "io.confluent.connect.protobuf.ProtobufConverter",
+    "confluent.topic.bootstrap.servers": "b-2-public.testcluster2.65grj0.c6.kafka.us-west-2.amazonaws.com:9198,b-3-public.testcluster2.65grj0.c6.kafka.us-west-2.amazonaws.com:9198,b-1-public.testcluster2.65grj0.c6.kafka.us-west-2.amazonaws.com:9198",
+    "confluent.topic.replication.factor": "1"
   }
 }
