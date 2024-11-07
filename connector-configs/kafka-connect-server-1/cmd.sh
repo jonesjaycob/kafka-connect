@@ -12,6 +12,7 @@ echo "Starting Kafka Connect in Distributed Mode"
 # Wait for Kafka Connect to be available
 echo "Waiting for Kafka Connect to start..."
 until curl -s http://$REST_ADVERTISED_HOST_NAME:8083/connectors; do
+  echo '...'
   sleep 5
 done
 
