@@ -1,6 +1,7 @@
 #!/bin/bash
 
-export REST_ADVERTISED_HOST_NAME=$(hostname -i)
+export REST_ADVERTISED_HOST_NAME=192.168.49.2:30849
+# export REST_ADVERTISED_HOST_NAME="$(hostname -i):8083"
 echo "Setting REST_ADVERTISED_HOST_NAME to $REST_ADVERTISED_HOST_NAME"
 
 envsubst < /etc/kafka/templates/connect-distributed.properties > /etc/kafka/connect-distributed.properties
@@ -11,8 +12,8 @@ echo "Starting Kafka Connect in Distributed Mode"
 
 # Wait for Kafka Connect to be available
 echo "Waiting for Kafka Connect to start..."
-until curl -s http://$REST_ADVERTISED_HOST_NAME:8083/connectors; do
-  echo "curl -s http://$REST_ADVERTISED_HOST_NAME:8083/connectors"
+until curl -s http://$REST_ADVERTISED_HOST_NAME/connectors; do
+  echo "curl -s http://$REST_ADVERTISED_HOST_NAME/connectors"
   sleep 5
 done
 
@@ -23,7 +24,7 @@ for config in /etc/kafka/connect/*.json; do
   connector_name=$(basename "$config" .json)
 
   # Check if the connector already exists
-  EXISTS=$(curl --silent --output /dev/null --write-out "%{http_code}" "http://$REST_ADVERTISED_HOST_NAME:8083/connectors/$connector_name")
+  EXISTS=$(curl --silent --output /dev/null --write-out "%{http_code}" "http://$REST_ADVERTISED_HOST_NAME/connectors/$connector_name")
 
   if [ "$EXISTS" -eq 200 ]; then
     # If the connector exists, use PUT to update the configuration
@@ -36,7 +37,7 @@ for config in /etc/kafka/connect/*.json; do
     echo "Data being sent in PUT request:"
     echo "$CONFIG_STRING"
 
-    curl --request PUT "http://$REST_ADVERTISED_HOST_NAME:8083/connectors/$connector_name/config" \
+    curl --request PUT "http://$REST_ADVERTISED_HOST_NAME/connectors/$connector_name/config" \
          --header 'Content-Type: application/json' \
          --data "$CONFIG_STRING" | jq
   else
@@ -47,7 +48,7 @@ for config in /etc/kafka/connect/*.json; do
     echo "Data being sent in POST request:"
     cat "$config"
 
-    curl --request POST "http://$REST_ADVERTISED_HOST_NAME:8083/connectors" \
+    curl --request POST "http://$REST_ADVERTISED_HOST_NAME/connectors" \
          --header 'Content-Type: application/json' \
          --data @"$config" | jq
   fi
