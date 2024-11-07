@@ -7,8 +7,7 @@ RUN dnf install -y unzip wget
 
 # Install Confluent connectors
 RUN confluent-hub install confluentinc/kafka-connect-datagen:latest --no-prompt --verbose \
-    && confluent-hub install confluentinc/kafka-connect-mqtt:latest --no-prompt --verbose \
-    && confluent-hub install confluentinc/kafka-connect-protobuf-converter:lastest --no-prompt --verbose
+    && confluent-hub install confluentinc/kafka-connect-mqtt:latest --no-prompt --verbose 
 
 # Download and extract the Lenses.io MQTT connector
 RUN wget https://github.com/lensesio/stream-reactor/releases/download/8.0.0/kafka-connect-mqtt-8.0.0.zip -O /tmp/kafka-connect-mqtt.zip \
@@ -18,6 +17,7 @@ RUN wget https://github.com/lensesio/stream-reactor/releases/download/8.0.0/kafk
 # Copy configuration files
 COPY /configs /etc/kafka/connect/
 COPY cmd.sh /usr/local/bin
+COPY /lib /usr/share/confluent-hub-components
 
 # Set permissions for the command script
 RUN chmod +x /usr/local/bin/cmd.sh \
