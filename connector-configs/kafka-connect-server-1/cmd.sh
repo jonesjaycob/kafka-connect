@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export REST_ADVERTISED_HOST_NAME=192.168.49.2:30849
-# export REST_ADVERTISED_HOST_NAME="$(hostname -i):8083"
+# export REST_ADVERTISED_HOST_NAME=192.168.49.2:30849
+export REST_ADVERTISED_HOST_NAME="$(hostname -i):8083"
 echo "Setting REST_ADVERTISED_HOST_NAME to $REST_ADVERTISED_HOST_NAME"
 
 envsubst < /etc/kafka/templates/connect-distributed.properties > /etc/kafka/connect-distributed.properties
