@@ -20,8 +20,7 @@ COPY cmd.sh /usr/local/bin
 
 
 # Set permissions for the command script
-RUN chmod +x /usr/local/bin/cmd.sh \
-    && chown -R appuser:appuser /etc/kafka/connect/ 
+RUN chmod +x /usr/local/bin/cmd.sh 
 
 # Switch back to appuser
 USER appuser
