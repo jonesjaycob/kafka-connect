@@ -14,6 +14,8 @@ RUN wget https://github.com/lensesio/stream-reactor/releases/download/8.0.0/kafk
     && unzip /tmp/kafka-connect-mqtt.zip -d /usr/share/java/kafka-connect-mqtt \
     && rm /tmp/kafka-connect-mqtt.zip
 
+# Copy configuration files
+COPY /arvoSchema /etc/kafka/connect/arvo
 COPY cmd.sh /usr/local/bin
 
 
