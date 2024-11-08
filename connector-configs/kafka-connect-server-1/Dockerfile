@@ -1,7 +1,7 @@
 # Base image
 FROM jaycobjones/kafka-connect-base:latest
 
-# Install unzip and wget using dnf (for CentOS/RHEL-based images)
+
 USER root
 RUN dnf install -y unzip wget
 
@@ -14,8 +14,6 @@ RUN wget https://github.com/lensesio/stream-reactor/releases/download/8.0.0/kafk
     && unzip /tmp/kafka-connect-mqtt.zip -d /usr/share/java/kafka-connect-mqtt \
     && rm /tmp/kafka-connect-mqtt.zip
 
-# Copy configuration files
-COPY /configs /etc/kafka/connect/
 COPY cmd.sh /usr/local/bin
 
 
