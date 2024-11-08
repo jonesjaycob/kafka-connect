@@ -31,15 +31,19 @@ for connector in $EXISTING_CONNECTORS; do
 done
 echo "All existing connectors have been deleted."
 
-# Apply connector configurations
-echo "Applying connector configurations..."
-for config in /etc/kafka/connect/*.json; do
-  connector_name=$(basename "$config" .json)
+# Apply the specific connector configuration from ConfigMap
+CONFIG_FILE="/etc/kafka/connect-configs/mqtt-connector-config.json"
+
+if [ -f "$CONFIG_FILE" ]; then
+  echo "Applying connector configuration from $CONFIG_FILE"
+  connector_name=$(jq -r '.name' "$CONFIG_FILE")
+  
+  # Check if connector already exists
   EXISTS=$(curl --silent --output /dev/null --write-out "%{http_code}" "http://$REST_ADVERTISED_HOST_NAME/connectors/$connector_name")
 
   if [ "$EXISTS" -eq 200 ]; then
     echo "Updating existing connector $connector_name (Status: Found)"
-    CONFIG_STRING=$(jq '.config' "$config")
+    CONFIG_STRING=$(jq '.config' "$CONFIG_FILE")
     echo "PUT request data:"
     echo "$CONFIG_STRING"
 
@@ -49,15 +53,17 @@ for config in /etc/kafka/connect/*.json; do
   else
     echo "Creating new connector $connector_name (Status: Not Found)"
     echo "POST request data:"
-    cat "$config"
+    cat "$CONFIG_FILE"
 
     curl --request POST "http://$REST_ADVERTISED_HOST_NAME/connectors" \
          --header 'Content-Type: application/json' \
-         --data @"$config" | jq
+         --data @"$CONFIG_FILE" | jq
   fi
-done
+else
+  echo "No connector configuration file found at $CONFIG_FILE."
+fi
 
-echo "Connector configurations have been applied."
+echo "Connector configuration has been applied."
 
 # Keep the container running
 wait
