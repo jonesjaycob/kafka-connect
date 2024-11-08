@@ -14,14 +14,14 @@ RUN wget https://github.com/lensesio/stream-reactor/releases/download/8.0.0/kafk
     && unzip /tmp/kafka-connect-mqtt.zip -d /usr/share/java/kafka-connect-mqtt \
     && rm /tmp/kafka-connect-mqtt.zip
 
+# Copy configuration files
 
 COPY cmd.sh /usr/local/bin
 
 
 # Set permissions for the command script
 RUN chmod +x /usr/local/bin/cmd.sh \
-    && chown -R appuser:appuser /etc/kafka/connect/ \
-    && chmod -R 755 /etc/kafka/connect/
+    && chown -R appuser:appuser /etc/kafka/connect/ 
 
 # Switch back to appuser
 USER appuser
